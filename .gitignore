@@ -98,6 +98,9 @@ ENV/
 /site
 
 
+# Pycharm
+/.idea/
+
 # Vim swp
 .*.sw?
 
