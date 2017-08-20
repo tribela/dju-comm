@@ -8,3 +8,5 @@ django-environ = "*"
 
 [dev-packages]
 flake8 = "*"
+autoflake = "*"
+autopep8 = "*"
