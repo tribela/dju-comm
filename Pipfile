@@ -5,6 +5,7 @@ verify_ssl = true
 [packages]
 django-environ = "*"
 Django = "*"
+xlrd = "*"
 
 [dev-packages]
 flake8 = "*"

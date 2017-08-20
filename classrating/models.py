@@ -1,9 +1,14 @@
+import xlrd
+
 from django.db import models
 
 
 class Professor(models.Model):
     name = models.CharField(max_length=30)
     depart = models.CharField(max_length=30)
+
+    def __str__(self):
+        return '{} - {}'.format(self.name, self.depart)
 
 
 class Class(models.Model):
@@ -28,9 +33,14 @@ class Class(models.Model):
     grade = models.IntegerField(null=True)  # 학년
     credit = models.IntegerField()  # 학점
 
-    unique_together = (
-        year, semester, code, division
-    )
+    class Meta:
+        unique_together = (
+            'year', 'semester', 'code', 'division'
+        )
+
+    def __str__(self):
+        return '{title} - {division}'.format(
+            title=self.title, division=self.division)
 
 
 class TimeTable(models.Model):
@@ -47,4 +57,74 @@ class TimeTable(models.Model):
     time = models.PositiveIntegerField(default=0)
     place = models.CharField(max_length=30)
 
-    unique_together = (class_to, day, place)
+    class Meta:
+        unique_together = ('class_to', 'day', 'place')
+
+    def __str__(self):
+        return '{} - {} {}'.format(
+            self.place, self.day, self.time
+        )
+
+
+class DataFile(models.Model):
+
+    year = models.PositiveIntegerField(default=0)
+    semester = models.CharField(max_length=4, choices=(
+        ('1', '1'),
+        ('2', '2'),
+        ('1e', '여름'),
+        ('2e', '겨울'),
+    ), default='1')
+    data = models.FileField()
+
+    def save(self, *args, **kwargs):
+        content = self.data.read()
+        workbook = xlrd.open_workbook(file_contents=content)
+        sheet = workbook.sheet_by_index(0)
+        for i in range(2, sheet.nrows):
+            row = sheet.row_values(i)
+
+            professor_name = row[5]
+            professor_depart = row[6]
+            professor, created = Professor.objects.get_or_create(
+                name=professor_name, depart=professor_depart)
+            if created:
+                professor.save()
+
+            code = row[1]
+            division = row[3]
+            title = row[2]
+            classification = row[4]
+            try:
+                capacity = int(row[7])
+            except ValueError:
+                capacity = 0
+            university = row[10]
+            department = row[11]
+            major = row[12]
+            category = row[13]
+            try:
+                grade = int(row[14])
+            except ValueError:
+                grade = None
+            try:
+                credit = int(row[16])
+            except ValueError:
+                credit = 0
+
+            class_, created = Class.objects.get_or_create(
+                year=self.year,
+                semester=self.semester,
+                code=code,
+                division=division,
+                title=title,
+                classification=classification,
+                capacity=capacity,
+                university=university,
+                department=department,
+                major=major,
+                category=category,
+                grade=grade,
+                credit=credit)
+
+            class_.save()
