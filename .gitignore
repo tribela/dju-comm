@@ -100,3 +100,5 @@ ENV/
 
 # Vim swp
 .*.sw?
+
+db.sqlite3
