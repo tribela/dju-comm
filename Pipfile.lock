@@ -1,0 +1,29 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "0d680c25b897925426ae808b3cd02173a0d5f979a39b07e065c142e23db010ac"
+        },
+        "requires": {},
+        "sources": [
+            {
+                "url": "https://pypi.python.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "django": {
+            "version": "==1.11.4"
+        },
+        "django-environ": {
+            "version": "==0.4.3"
+        },
+        "pytz": {
+            "version": "==2017.2"
+        },
+        "six": {
+            "version": "==1.10.0"
+        }
+    },
+    "develop": {}
+}
