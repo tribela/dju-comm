@@ -95,7 +95,7 @@ class DataFile(models.Model):
         timetables = []
         for item in pattern.finditer(rawstring):
             if item.group('place'):
-                place = item.group('place')
+                place = item.group('place').strip()
             day = item.group('day')
             times = item.group('times')
             for time in map(int, times.split(',')):
