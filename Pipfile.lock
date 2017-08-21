@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "987905b05446dc06c0bb87d3c35faf9a7cbb0eb73bee7ccfc4806084676df7a9"
+            "sha256": "4b03c0282638daae0371adb2f13b00b1df5f5e7c5e00087377ca724b314da748"
         },
         "requires": {},
         "sources": [
@@ -23,6 +23,9 @@
         },
         "six": {
             "version": "==1.10.0"
+        },
+        "xlrd": {
+            "version": "==1.0.0"
         }
     },
     "develop": {
@@ -45,7 +48,7 @@
             "version": "==2.3.1"
         },
         "pyflakes": {
-            "version": "==1.5.0"
+            "version": "==1.6.0"
         }
     }
 }

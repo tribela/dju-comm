@@ -1,3 +1,4 @@
+import re
 import xlrd
 
 from django.db import models
@@ -58,7 +59,7 @@ class TimeTable(models.Model):
     place = models.CharField(max_length=30)
 
     class Meta:
-        unique_together = ('class_to', 'day', 'place')
+        unique_together = ('class_to', 'day', 'time')
 
     def __str__(self):
         return '{} - {} {}'.format(
@@ -77,7 +78,40 @@ class DataFile(models.Model):
     ), default='1')
     data = models.FileField()
 
+    @staticmethod
+    def parse_timetables(class_, rawstring):
+        pattern = re.compile(
+            r'(?!, )((?P<place>.+?):)?'
+            r'(?P<day>[월화수목금토일])\((?P<times>\d+(?:,\d+)*)\)')
+        day_map = {
+            '월': '1',
+            '화': '2',
+            '수': '3',
+            '목': '4',
+            '금': '5',
+            '토': '6',
+            '일': '7',
+        }
+        timetables = []
+        for item in pattern.finditer(rawstring):
+            if item.group('place'):
+                place = item.group('place')
+            day = item.group('day')
+            times = item.group('times')
+            for time in map(int, times.split(',')):
+                timetable, created = TimeTable.objects.get_or_create(
+                    class_to=class_,
+                    day=day_map[day],
+                    time=time,
+                    place=place)
+                if created:
+                    timetable.save()
+                timetables.append(timetable)
+
+        return timetables
+
     def save(self, *args, **kwargs):
+
         content = self.data.read()
         workbook = xlrd.open_workbook(file_contents=content)
         sheet = workbook.sheet_by_index(0)
@@ -127,4 +161,5 @@ class DataFile(models.Model):
                 grade=grade,
                 credit=credit)
 
+            class_.timetables.set(DataFile.parse_timetables(class_, row[24]))
             class_.save()
