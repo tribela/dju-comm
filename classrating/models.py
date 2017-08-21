@@ -102,8 +102,8 @@ class DataFile(models.Model):
                 timetable, created = TimeTable.objects.get_or_create(
                     class_to=class_,
                     day=day_map[day],
-                    time=time,
-                    place=place)
+                    time=time)
+                timetable.place = place
                 if created:
                     timetable.save()
                 timetables.append(timetable)
@@ -150,16 +150,19 @@ class DataFile(models.Model):
                 year=self.year,
                 semester=self.semester,
                 code=code,
-                division=division,
-                title=title,
-                classification=classification,
-                capacity=capacity,
-                university=university,
-                department=department,
-                major=major,
-                category=category,
-                grade=grade,
-                credit=credit)
+                division=division)
+
+            class_.title = title
+            class_.professor = professor
+            class_.classicification = classification
+            class_.capacity = capacity
+            class_.university = university
+            class_.department = department
+            class_.major = major
+            class_.category = category
+            class_.grade = grade
+            class_.credit = credit
+
 
             class_.timetables.set(DataFile.parse_timetables(class_, row[24]))
             class_.save()
