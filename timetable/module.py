@@ -1,0 +1,1 @@
+../classrating/models.py
