@@ -146,23 +146,23 @@ class DataFile(models.Model):
             except ValueError:
                 credit = 0
 
-            class_, created = Class.objects.get_or_create(
+            class_, created = Class.objects.update_or_create(
                 year=self.year,
                 semester=self.semester,
                 code=code,
-                division=division)
-
-            class_.title = title
-            class_.professor = professor
-            class_.classicification = classification
-            class_.capacity = capacity
-            class_.university = university
-            class_.department = department
-            class_.major = major
-            class_.category = category
-            class_.grade = grade
-            class_.credit = credit
-
+                division=division,
+                defaults={
+                    'title': title,
+                    'professor': professor,
+                    'classification': classification,
+                    'capacity': capacity,
+                    'university': university,
+                    'department': department,
+                    'major': major,
+                    'category': category,
+                    'grade': grade,
+                    'credit': credit,
+                })
 
             class_.timetables.set(DataFile.parse_timetables(class_, row[24]))
             class_.save()
