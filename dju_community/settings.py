@@ -123,3 +123,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Use custom User model
+# https://docs.djangoproject.com/ko/1.11/topics/auth/customizing/#substituting-a-custom-user-model
+
+AUTH_USER_MODEL = 'dju_community.timetable'
