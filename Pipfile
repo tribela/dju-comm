@@ -10,7 +10,7 @@ uWSGI = "*"
 whitenoise = "*"
 django-object-actions = "*"
 psycopg2 = "*"
-django-celery = "*"
+django-background-tasks = "*"
 
 [dev-packages]
 flake8 = "*"

@@ -1,3 +1,4 @@
+import base64
 from django import forms
 from .models import Class
 from .tasks import import_excel
@@ -14,5 +15,7 @@ class ExcelImportForm(forms.ModelForm):
     def save(self):
         year = self.cleaned_data['year']
         semester = self.cleaned_data['semester']
-        content = self.cleaned_data['excel_file'].read()
-        import_excel.delay(year, semester, content)
+        content = base64.b64encode(
+            self.cleaned_data['excel_file'].read()
+        ).decode('ascii')
+        import_excel(year, semester, content)

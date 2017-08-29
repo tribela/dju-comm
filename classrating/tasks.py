@@ -1,7 +1,8 @@
+import base64
 import re
 import xlrd
 
-from celery import shared_task
+from background_task import background
 
 from .models import Class, Professor, TimeTable
 
@@ -38,9 +39,10 @@ def parse_timetables(class_, rawstring):
     return timetables
 
 
-@shared_task
+@background(schedule=0)
 def import_excel(year, semester, xls_content):
-    workbook = xlrd.open_workbook(file_contents=xls_content)
+    workbook = xlrd.open_workbook(
+        file_contents=base64.b64decode(xls_content.encode('ascii')))
     sheet = workbook.sheet_by_index(0)
     for i in range(2, sheet.nrows):
         row = sheet.row_values(i)
