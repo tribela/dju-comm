@@ -8,6 +8,7 @@ Django = "*"
 xlrd = "*"
 uWSGI = "*"
 whitenoise = "*"
+django-object-actions = "*"
 
 [dev-packages]
 flake8 = "*"
