@@ -9,6 +9,7 @@ xlrd = "*"
 uWSGI = "*"
 whitenoise = "*"
 django-object-actions = "*"
+psycopg2 = "*"
 
 [dev-packages]
 flake8 = "*"
