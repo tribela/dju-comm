@@ -23,14 +23,14 @@ class Class(models.Model):
     ), default='1')
     code = models.CharField(max_length=6)  # 학수번호
     division = models.CharField(max_length=5)  # 분반
-    title = models.CharField(max_length=30)  # 과목명
-    classification = models.CharField(max_length=4)  # 이수구분
+    title = models.CharField(max_length=100)  # 과목명
+    classification = models.CharField(max_length=10)  # 이수구분
     professor = models.ForeignKey(Professor, related_name='classes', null=True)
     capacity = models.IntegerField()  # 수강제한인원
-    university = models.CharField(max_length=10)  # 대학
-    department = models.CharField(max_length=10)  # 학부(과)
-    major = models.CharField(max_length=10)  # 학과(전공)
-    category = models.CharField(max_length=10)  # 과정구분
+    university = models.CharField(max_length=40)  # 대학
+    department = models.CharField(max_length=40)  # 학부(과)
+    major = models.CharField(max_length=40)  # 학과(전공)
+    category = models.CharField(max_length=40)  # 과정구분
     grade = models.IntegerField(null=True)  # 학년
     credit = models.IntegerField()  # 학점
 
