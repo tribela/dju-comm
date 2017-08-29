@@ -105,3 +105,4 @@ ENV/
 .*.sw?
 
 db.sqlite3
+/_site/

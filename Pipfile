@@ -6,6 +6,8 @@ verify_ssl = true
 django-environ = "*"
 Django = "*"
 xlrd = "*"
+uWSGI = "*"
+whitenoise = "*"
 
 [dev-packages]
 flake8 = "*"
