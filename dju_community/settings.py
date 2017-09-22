@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_object_actions',
+    'accounts',
     'background_task',
     'classrating',
 ]
@@ -133,3 +134,8 @@ MEDIA_ROOT = public_root('media')
 MEDIA_URL = '/media/'
 STATIC_ROOT = public_root('staticfiles')
 STATIC_URL = '/static/'
+
+
+# django-registration
+
+ACCOUNT_ACTIVATION_DAYS = 1
