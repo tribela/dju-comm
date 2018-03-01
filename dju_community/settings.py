@@ -134,3 +134,9 @@ MEDIA_ROOT = public_root('media')
 MEDIA_URL = '/media/'
 STATIC_ROOT = public_root('staticfiles')
 STATIC_URL = '/static/'
+
+
+# Use custom User model
+# https://docs.djangoproject.com/ko/1.11/topics/auth/customizing/#substituting-a-custom-user-model
+
+AUTH_USER_MODEL = 'dju_community.timetable'
